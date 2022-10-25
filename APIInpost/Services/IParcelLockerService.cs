@@ -8,8 +8,8 @@ namespace APIInpost.Services
 {
     public interface IParcelLockerService
     {
-        IEnumerable<ParcelLockerDto> GetAllParcelLockersByList();
+        IEnumerable<ShortParcelLockerDto> GetAllParcelLockersByList();
 
-        Guid CreateParcelLocker(ParcelLockerDto dto);
+        Guid CreateParcelLocker(ShortParcelLockerDto dto);
     }
 }

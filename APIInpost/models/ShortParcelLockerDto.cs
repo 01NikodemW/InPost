@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace APIInpost.models
 {
-    public class UserDto
+    public class ShortParcelLockerDto
     {
         public Guid Id { get; set; }
-
-        public string UserName { get; set; } = default!;
+        public string Name { get; set; } = default!;
     }
 }

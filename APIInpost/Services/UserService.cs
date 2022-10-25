@@ -1,6 +1,7 @@
 using APIInpost.Entities;
 using APIInpost.models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIInpost.Services
 {
@@ -16,20 +17,27 @@ namespace APIInpost.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<UserDto> GetAllUserByList()
+        public IEnumerable<ShortUserDto> GetAllUserByList()
         {
             var users = _dbContext.Users.ToList();
-            var usersDtos = _mapper.Map<List<UserDto>>(users);
+            var usersDtos = _mapper.Map<List<ShortUserDto>>(users);
 
             return usersDtos;
         }
 
-        public UserDto GetUserById(Guid id)
+        public ShortUserDto GetUserById(Guid id)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
-            var userDto = _mapper.Map<UserDto>(user);
+            var userDto = _mapper.Map<ShortUserDto>(user);
 
             return userDto;
         }
+
+        // public IEnumerable<NormalUserDto> GetAllUsers()
+        // {
+        //     var users = _dbContext.Users.Include(x => x.RecievedParcels).Include(x => x.SentParcels).ToList();
+        //     var usersDto = _mapper.Map<List<NormalUserDto>>(users);
+        //     return usersDto;
+        // }
     }
 }

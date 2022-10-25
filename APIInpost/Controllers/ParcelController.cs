@@ -17,14 +17,14 @@ namespace APIInpost.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Parcel>> GetAll()
+        public ActionResult<IEnumerable<ParcelDto>> GetAll()
         {
             var parcels = _parcelService.GetAllParcels();
             return Ok(parcels);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Parcel> GetById([FromRoute] Guid id)
+        public ActionResult<ParcelDto> GetById([FromRoute] Guid id)
         {
             var parcel = _parcelService.GetParcelById(id);
             return Ok(parcel);

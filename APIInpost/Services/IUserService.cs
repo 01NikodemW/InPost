@@ -4,7 +4,7 @@ namespace APIInpost.Services
 {
     public interface IUserService
     {
-        IEnumerable<UserDto> GetAllUserByList();
-        UserDto GetUserById(Guid id);
+        IEnumerable<ShortUserDto> GetAllUserByList();
+        ShortUserDto GetUserById(Guid id);
     }
 }

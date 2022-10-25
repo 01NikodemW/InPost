@@ -20,7 +20,7 @@ namespace APIInpost.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ParcelLockerDto>>
+        public ActionResult<IEnumerable<ShortParcelLockerDto>>
         GetAllParcelLockersByList()
         {
             var parcelLockers =
@@ -29,8 +29,8 @@ namespace APIInpost.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ParcelLockerDto>
-        CreateParcelLocker([FromBody] ParcelLockerDto dto)
+        public ActionResult<ShortParcelLockerDto>
+        CreateParcelLocker([FromBody] ShortParcelLockerDto dto)
         {
             var newParcelLockerId =
                 _parcelLockerService.CreateParcelLocker(dto);

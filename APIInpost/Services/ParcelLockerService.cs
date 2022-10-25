@@ -20,16 +20,16 @@ namespace APIInpost.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ParcelLockerDto> GetAllParcelLockersByList()
+        public IEnumerable<ShortParcelLockerDto> GetAllParcelLockersByList()
         {
             var parcelLockers = _dbContext.ParcelLockers.ToList();
             var parcelLockersDtos =
-                _mapper.Map<List<ParcelLockerDto>>(parcelLockers);
+                _mapper.Map<List<ShortParcelLockerDto>>(parcelLockers);
 
             return parcelLockersDtos;
         }
 
-        public Guid CreateParcelLocker(ParcelLockerDto dto)
+        public Guid CreateParcelLocker(ShortParcelLockerDto dto)
         {
             var parcelLocker = _mapper.Map<ParcelLocker>(dto);
             _dbContext.ParcelLockers.Add (parcelLocker);

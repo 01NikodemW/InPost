@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace APIInpost.models
 {
     public class ParcelDto
@@ -14,18 +9,23 @@ namespace APIInpost.models
 
         public int Weight { get; set; }
 
-        public Guid SourceLockerId { get; set; } 
+        // public Guid SourceLockerId { get; set; } 
 
-        public Guid DestinationLockerId { get; set; }
+        // public Guid DestinationLockerId { get; set; }
         
-        public Guid SenderId { get; set; } 
+        // public Guid SenderId { get; set; } 
 
-        public Guid ReciverId { get; set; }
+        // public Guid ReciverId { get; set; }
 
-        public virtual UserDto Sender { get; set; }
-        public virtual UserDto Reciver { get; set; }
-        public virtual ParcelLockerDto SourceLocker { get; set; }
-        public virtual ParcelLockerDto DestinationLocker { get; set; }
+        public virtual ShortUserDto Sender { get; set; }
+        public virtual ShortUserDto Reciver { get; set; }
+        public virtual ShortParcelLockerDto SourceLocker { get; set; }
+        public virtual ShortParcelLockerDto DestinationLocker { get; set; }
+
+        // public string SenderName { get; set; } = default!;
+        // public string ReceiverName { get; set; } = default!;
+        // public string SourceLockerName { get; set; } = default!;
+        // public string DestinationLockerName { get; set; } = default!;
 
     
     }
