@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IParcelService, ParcelService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IParcelLockerService, ParcelLockerService>();
 builder.Services.AddDbContext<InpostDbContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

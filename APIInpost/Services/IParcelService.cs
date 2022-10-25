@@ -9,8 +9,13 @@ namespace APIInpost.Services
 
         ParcelDto GetParcelById(Guid id);
 
-        Guid CreateNewParcel(Parcel parcel);
+        IEnumerable<ParcelDto> GetUserParcels(Guid id);
 
-        void DeleteParcel(Guid id);
+        IEnumerable<ParcelDto> GetParcelsUserSent(Guid id);
+
+        IEnumerable<ParcelDto> GetParcelsUserGet(Guid id);
+
+
+        Guid CreateParcel(CreateParcelDto dto);
     }
 }

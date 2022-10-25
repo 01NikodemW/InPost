@@ -11,6 +11,9 @@ namespace APIInpost
             CreateMap<Parcel, ParcelDto>();
             CreateMap<ParcelLocker, ParcelLockerDto>();
             CreateMap<User, UserDto>();
+            CreateMap<ParcelLockerDto, ParcelLocker>();
+            CreateMap<CreateParcelDto, Parcel>();
+            CreateMap<Parcel, CreateParcelDto>();
         }
     }
 }

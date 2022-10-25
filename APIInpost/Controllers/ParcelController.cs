@@ -1,5 +1,6 @@
 using APIInpost.Entities;
 using APIInpost.Services;
+using APIInpost.models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIInpost.Controllers
@@ -30,19 +31,11 @@ namespace APIInpost.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Guid> CreateParcel([FromBody] Parcel parcel)
+        public ActionResult<Guid> CreateParcel([FromBody] CreateParcelDto parceldto)
         {
-            var id = _parcelService.CreateNewParcel(parcel);
+            var parcelId = _parcelService.CreateParcel(parceldto);
 
-            return Created($"/api/parcel/{id}", null);
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] Guid id)
-        {
-            _parcelService.DeleteParcel (id);
-
-            return Ok();
+            return Created($"/api/parcel/{parcelId}", null);
         }
     }
 }

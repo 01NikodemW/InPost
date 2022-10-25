@@ -35,31 +35,76 @@ namespace APIInpost.Services
 
             var parcelDto = _mapper.Map<ParcelDto>(parcel);
 
-            return parcelDto;
+            return parcel;
         }
 
-        public Guid CreateNewParcel(Parcel parcel){
+        public IEnumerable<ParcelDto> GetUserParcels(Guid id)
+        {
+            var parcels = _dbContext.Parcels.Include(x => x.DestinationLocker).Include(x => x.SourceLocker).Include(x => x.Reciver).Include(x => x.Sender).ToList();
+            var userParcels = parcels.Where(x=> x.ReciverId == id || x.SenderId ==id );
+            var userParcelsDtos = _mapper.Map<List<ParcelDto>>(userParcels);
 
-            if(parcel is null)
-               throw new NullReferenceException("Passed parcel is null");
+            return userParcelsDtos;
+        }
 
-            if(parcel.Id != Guid.Empty)
-                throw new ArgumentException("Passed parcel should not have id");
+        public IEnumerable<ParcelDto> GetParcelsUserSent(Guid id)
+        {
+            var parcels = _dbContext.Parcels.Include(x => x.DestinationLocker).Include(x => x.SourceLocker).Include(x => x.Reciver).Include(x => x.Sender).ToList();
+            var userParcels = parcels.Where(x=> x.SenderId ==id );
+            var userParcelsDtos = _mapper.Map<List<ParcelDto>>(userParcels);
 
+            return userParcelsDtos;
+        }
+
+        public IEnumerable<ParcelDto> GetParcelsUserGet(Guid id)
+        {
+            var parcels = _dbContext.Parcels.Include(x => x.DestinationLocker).Include(x => x.SourceLocker).Include(x => x.Reciver).Include(x => x.Sender).ToList();
+            var userParcels = parcels.Where(x=> x.ReciverId ==id );
+            var userParcelsDtos = _mapper.Map<List<ParcelDto>>(userParcels);
+
+            return userParcelsDtos;
+        }
+
+        // public void DeleteParcel(Guid id)
+        // {
+        //     var parcel = _dbContext.Parcels.FirstOrDefault(p => p.Id == id);
+        //     if (parcel is null)
+        //        throw new NullReferenceException("Parcel to delete found");
+
+        //     _dbContext.Parcels.Remove(parcel);
+        //     _dbContext.SaveChanges();
+        // }
+
+        public Guid CreateParcel(CreateParcelDto dto)
+        {
+            check(dto.SenderId,dto.ReciverId,dto.SourceLockerId,dto.DestinationLockerId);
+            var parcel = _mapper.Map<Parcel>(dto);
             _dbContext.Parcels.Add (parcel);
             _dbContext.SaveChanges();
-
             return parcel.Id;
         }
 
-        public void DeleteParcel(Guid id)
-        {
-            var parcel = _dbContext.Parcels.FirstOrDefault(p => p.Id == id);
-            if (parcel is null)
-               throw new NullReferenceException("Parcel to delete found");
+        private void check(Guid senderId, Guid receiverId, Guid sourceLockerId, Guid destinationLockerId){
+            if(_dbContext.Users.FirstOrDefault(x => x.Id == senderId) is null){
+                throw new NullReferenceException("Sender not found");
+            }
+            if(_dbContext.Users.FirstOrDefault(x => x.Id == receiverId) is null){
+                throw new NullReferenceException("Receiver not found");
+            }
+            if(_dbContext.ParcelLockers.FirstOrDefault(x => x.Id == sourceLockerId) is null){
+                throw new NullReferenceException("Source Locker not found");
+            }
+            if(_dbContext.ParcelLockers.FirstOrDefault(x => x.Id == destinationLockerId) is null){
+                throw new NullReferenceException("Destination Locker not found");
+            }
 
-            _dbContext.Parcels.Remove(parcel);
-            _dbContext.SaveChanges();
+            if(sourceLockerId.Equals(destinationLockerId)){
+                throw new ArgumentException("Source Locker and Destination Locker cannot be the same");
+            }
         }
+
+
+
+
     }
 }
