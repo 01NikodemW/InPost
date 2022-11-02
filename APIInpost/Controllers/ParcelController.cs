@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIInpost.Controllers
 {
-    [Route("api/parcel")]
+    [Route("parcel")]
     [ApiController]
     public class ParcelController : ControllerBase
     {
@@ -30,8 +30,16 @@ namespace APIInpost.Controllers
             return Ok(parcel);
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult<ParcelDto> DeleteParcel([FromRoute] Guid id)
+        {
+            _parcelService.DeleteParcel (id);
+            return Ok();
+        }
+
         [HttpPost]
-        public ActionResult<Guid> CreateParcel([FromBody] CreateParcelDto parceldto)
+        public ActionResult<Guid>
+        CreateParcel([FromBody] CreateParcelDto parceldto)
         {
             var parcelId = _parcelService.CreateParcel(parceldto);
 

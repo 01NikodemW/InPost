@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIInpost.Controllers
 {
-    [Route("api/parcellocker")]
+    [Route("parcellocker")]
     [ApiController]
     public class ParcelLockerController : ControllerBase
     {

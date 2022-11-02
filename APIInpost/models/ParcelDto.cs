@@ -1,3 +1,5 @@
+using APIInpost.Enum;
+
 namespace APIInpost.models
 {
     public class ParcelDto
@@ -8,14 +10,15 @@ namespace APIInpost.models
         public string Name { get; set; } = default!;
 
         public int Weight { get; set; }
+        public DeliveryStatus DeliveryStatus { get; set; }
 
-        // public Guid SourceLockerId { get; set; } 
+        public Guid SourceLockerId { get; set; } 
 
-        // public Guid DestinationLockerId { get; set; }
+        public Guid DestinationLockerId { get; set; }
         
-        // public Guid SenderId { get; set; } 
+        public Guid SenderId { get; set; } 
 
-        // public Guid ReciverId { get; set; }
+        public Guid ReciverId { get; set; }
 
         public virtual ShortUserDto Sender { get; set; }
         public virtual ShortUserDto Reciver { get; set; }

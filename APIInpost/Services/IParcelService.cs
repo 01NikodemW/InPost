@@ -14,8 +14,10 @@ namespace APIInpost.Services
         IEnumerable<ParcelDto> GetParcelsUserSent(Guid id);
 
         IEnumerable<ParcelDto> GetParcelsUserGet(Guid id);
-
-
         Guid CreateParcel(CreateParcelDto dto);
+        void ReceiveParcel(Guid receiverId,Guid parcelId);
+        void DeleteParcel(Guid parcelId);
+
+
     }
 }

@@ -65,23 +65,40 @@ namespace APIInpost.Services
             return userParcelsDtos;
         }
 
-        // public void DeleteParcel(Guid id)
-        // {
-        //     var parcel = _dbContext.Parcels.FirstOrDefault(p => p.Id == id);
-        //     if (parcel is null)
-        //        throw new NullReferenceException("Parcel to delete found");
+        public void DeleteParcel(Guid id)
+        {
+            var parcel = _dbContext.Parcels.FirstOrDefault(p => p.Id == id);
+            if (parcel is null)
+               throw new NullReferenceException("Parcel to delete found");
 
-        //     _dbContext.Parcels.Remove(parcel);
-        //     _dbContext.SaveChanges();
-        // }
+            _dbContext.Parcels.Remove(parcel);
+            _dbContext.SaveChanges();
+        }
 
         public Guid CreateParcel(CreateParcelDto dto)
         {
             check(dto.SenderId,dto.ReciverId,dto.SourceLockerId,dto.DestinationLockerId);
             var parcel = _mapper.Map<Parcel>(dto);
+            parcel.DeliveryStatus = Enum.DeliveryStatus.Sent;
             _dbContext.Parcels.Add (parcel);
             _dbContext.SaveChanges();
             return parcel.Id;
+        }
+
+
+
+        public void ReceiveParcel(Guid receiverId,Guid parcelId){
+            var parcel = _dbContext.Parcels.FirstOrDefault(x =>x.Id == parcelId);
+            if(parcel is null){
+                throw new NullReferenceException("Parcel not found");
+            }
+
+            if(parcel.ReciverId != receiverId){
+                throw new ArgumentException("You cannot receive this pack");
+            }
+
+            parcel.DeliveryStatus = Enum.DeliveryStatus.Delivered;
+            _dbContext.SaveChanges();
         }
 
         private void check(Guid senderId, Guid receiverId, Guid sourceLockerId, Guid destinationLockerId){
@@ -102,9 +119,6 @@ namespace APIInpost.Services
                 throw new ArgumentException("Source Locker and Destination Locker cannot be the same");
             }
         }
-
-
-
 
     }
 }

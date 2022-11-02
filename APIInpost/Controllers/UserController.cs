@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIInpost.Controllers
 {
-    [Route("api/user")]
+    [Route("user")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -37,15 +37,26 @@ namespace APIInpost.Controllers
         }
 
         [HttpGet("{id}/parcels")]
-        public ActionResult<IEnumerable<ParcelDto>> GetUsersParcel([FromRoute] Guid id)
+        public ActionResult<IEnumerable<ParcelDto>>
+        GetUsersParcels([FromRoute] Guid id)
         {
             var allParcels = _parcelService.GetUserParcels(id);
 
             return Ok(allParcels);
         }
 
+        [HttpPut("{receiverId}/parcels/{parcelId}")]
+        public ActionResult<Guid>
+        CollectParcel([FromRoute] Guid receiverId, [FromRoute] Guid parcelId)
+        {
+            _parcelService.ReceiveParcel (receiverId, parcelId);
+
+            return Ok();
+        }
+
         [HttpGet("{id}/parcels/sent")]
-        public ActionResult<IEnumerable<ParcelDto>> GetParcelsUserSent([FromRoute] Guid id)
+        public ActionResult<IEnumerable<ParcelDto>>
+        GetParcelsUserSent([FromRoute] Guid id)
         {
             var sentParcels = _parcelService.GetParcelsUserSent(id);
 
@@ -53,7 +64,8 @@ namespace APIInpost.Controllers
         }
 
         [HttpGet("{id}/parcels/get")]
-        public ActionResult<IEnumerable<ParcelDto>> GetParcelsUserGet([FromRoute] Guid id)
+        public ActionResult<IEnumerable<ParcelDto>>
+        GetParcelsUserGet([FromRoute] Guid id)
         {
             var sentParcels = _parcelService.GetParcelsUserGet(id);
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APIInpost.Enum;
 
 namespace APIInpost.Entities
 {
@@ -12,6 +13,7 @@ namespace APIInpost.Entities
         public string Name { get; set; } = default!;
 
         public int Weight { get; set; }
+        public DeliveryStatus DeliveryStatus { get; set; }
 
         public Guid SourceLockerId { get; set; } 
 
@@ -25,6 +27,7 @@ namespace APIInpost.Entities
         public virtual User Reciver { get; set; }
         public virtual ParcelLocker SourceLocker { get; set; }
         public virtual ParcelLocker DestinationLocker { get; set; }
+
 
     }
 }

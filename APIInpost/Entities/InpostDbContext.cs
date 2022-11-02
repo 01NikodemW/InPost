@@ -25,28 +25,37 @@ namespace APIInpost.Entities
             modelBuilder.Entity<Parcel>().Property(x => x.Weight).IsRequired();
             ParcelSeeder.SeedData (modelBuilder);
 
-            modelBuilder.Entity<Parcel>()
-            .HasOne(x => x.DestinationLocker)
-            .WithMany(x => x.ParcelsToPickup)
-            .HasForeignKey(x => x.DestinationLockerId);
+            modelBuilder
+                .Entity<Parcel>()
+                .HasOne(x => x.DestinationLocker)
+                .WithMany(x => x.ParcelsToPickup)
+                .HasForeignKey(x => x.DestinationLockerId);
 
-            modelBuilder.Entity<Parcel>()
-            .HasOne(x => x.SourceLocker)
-            .WithMany(x => x.ParcelsToSend)
-            .HasForeignKey(x => x.SourceLockerId)
-            .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder
+                .Entity<Parcel>()
+                .HasOne(x => x.SourceLocker)
+                .WithMany(x => x.ParcelsToSend)
+                .HasForeignKey(x => x.SourceLockerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            
-            modelBuilder.Entity<Parcel>()
-            .HasOne(x => x.Reciver)
-            .WithMany(x => x.RecievedParcels)
-            .HasForeignKey(x => x.ReciverId);
+            modelBuilder
+                .Entity<Parcel>()
+                .HasOne(x => x.Reciver)
+                .WithMany(x => x.RecievedParcels)
+                .HasForeignKey(x => x.ReciverId);
 
-            modelBuilder.Entity<Parcel>()
-            .HasOne(x => x.Sender)
-            .WithMany(x => x.SentParcels)
-            .HasForeignKey(x => x.SenderId)
-            .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder
+                .Entity<Parcel>()
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.SentParcels)
+                .HasForeignKey(x => x.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // modelBuilder
+            //     .Entity<Parcel>()
+            //     .Property(x => x.DeliveryStatus)
+            //     .HasConversion<string>();
+
         }
 
         protected override void OnConfiguring(
@@ -54,8 +63,6 @@ namespace APIInpost.Entities
         )
         {
             optionsBuilder.UseSqlServer (_connectionString);
-
-    
         }
     }
 }
