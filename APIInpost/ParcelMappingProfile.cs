@@ -15,6 +15,7 @@ namespace APIInpost
             CreateMap<CreateParcelDto, Parcel>();
             CreateMap<Parcel, CreateParcelDto>();
             CreateMap<Parcel, ParcelDto>();
+            CreateMap<CreateUserDto, User>();
                 // .ForMember(p => p.SenderName, p => p.MapFrom(p => p.Sender.UserName))
                 // .ForMember(p => p.ReceiverName, p => p.MapFrom(p => p.Reciver.UserName))
                 // .ForMember(p => p.SourceLockerName, p => p.MapFrom(p => p.SourceLocker.Name))
