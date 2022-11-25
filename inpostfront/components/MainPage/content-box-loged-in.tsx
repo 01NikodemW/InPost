@@ -4,10 +4,10 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import MarkunreadMailboxIcon from '@mui/icons-material/MarkunreadMailbox';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
+import AddParcelForm from "./add-parcel-form";
 
 const ContentBoxLogedIn = () => {
 
-    // const url = new URL('https://static.wirtualnemedia.pl/media/images/2013/images/3_4893.jpeg');
 
     const { user, isAuthenticated } = useAuth0();
 
@@ -20,7 +20,11 @@ const ContentBoxLogedIn = () => {
         window.addEventListener('resize', handleResize);
     });
 
+    const [addParcelOpen, setAddParcelOpen] = useState<boolean>(false)
 
+    const onAddParcelHandler = () => {
+        setAddParcelOpen(true)
+    }
 
     return (
         <>
@@ -50,90 +54,93 @@ const ContentBoxLogedIn = () => {
                     paddingBottom: "50px",
                     flexDirection: pageWidth < 830 ? "column" : "row"
                 }}>
-
-                    <Box sx={{
-                        width: "400px",
-                        height: "400px",
-                        backgroundColor: "#424143",
-                        borderRadius: "15px",
-                        padding: "10px",
-                        marginY: pageWidth < 830 ? "10px" : "0px",
-                        '&:hover': {
-                            backgroundColor: '#7D55B9',
-                            cursor: "pointer",
-                        },
-                    }}>
+                    {!addParcelOpen && <>
                         <Box sx={{
-                            height: "70%",
-                            backgroundImage: `url("https://static.wirtualnemedia.pl/media/top/paczkomat-artinpost-655.png")`,
-                            backgroundRepeat: "no-repeat",
-                            // backgroundPosition: "center",
-                            backgroundSize: "cover",
-                            borderTopLeftRadius: "15px",
-                            borderTopRightRadius: "15px",
-                        }}>
+                            width: "400px",
+                            height: "400px",
+                            backgroundColor: "#424143",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            marginY: pageWidth < 830 ? "10px" : "0px",
+                            '&:hover': {
+                                backgroundColor: '#7D55B9',
+                                cursor: "pointer",
+                            },
+                        }}
+                            onClick={onAddParcelHandler}
+                        >
+                            <Box sx={{
+                                height: "70%",
+                                backgroundImage: `url("https://static.wirtualnemedia.pl/media/top/paczkomat-artinpost-655.png")`,
+                                backgroundRepeat: "no-repeat",
+                                // backgroundPosition: "center",
+                                backgroundSize: "cover",
+                                borderTopLeftRadius: "15px",
+                                borderTopRightRadius: "15px",
+                            }}>
+                            </Box>
+                            <Box sx={{
+                                height: "30%",
+                                backgroundColor: "#FFCD00",
+                                borderBottomLeftRadius: "15px",
+                                borderBottomRightRadius: "15px",
+                                paddingX: "10px",
+
+                            }}>
+                                <Box sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    height: "50px", paddingTop: "20px"
+                                }}>
+                                    <Typography variant="h4" sx={{ color: "#424143", paddingX: "10px", }}>Nadaj paczkę  </Typography>
+                                    <LocalShippingIcon sx={{ fontSize: "40px", color: "#424143", }} />
+                                </Box>
+
+                            </Box>
                         </Box>
                         <Box sx={{
-                            height: "30%",
-                            backgroundColor: "#FFCD00",
-                            borderBottomLeftRadius: "15px",
-                            borderBottomRightRadius: "15px",
-                            paddingX: "10px",
-
+                            width: "400px",
+                            height: "400px",
+                            backgroundColor: "#424143",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            marginY: pageWidth < 830 ? "10px" : "0px",
+                            '&:hover': {
+                                backgroundColor: '#9D4570',
+                                cursor: "pointer",
+                            },
                         }}>
                             <Box sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                height: "50px", paddingTop: "20px"
+                                height: "70%",
+                                backgroundImage: `url("https://1.bp.blogspot.com/-11UqepTOqe0/XSxqMnt5XrI/AAAAAAAAIHU/jaGD44LcraY3Mj_WSwy_kSBpkXIA3xWXQCLcBGAs/s1600/Paczkomat_mockup.jpg")`,
+                                backgroundRepeat: "no-repeat",
+                                // backgroundPosition: "center",
+                                backgroundSize: "cover",
+                                borderTopLeftRadius: "15px",
+                                borderTopRightRadius: "15px",
                             }}>
-                                <Typography variant="h4" sx={{ color: "#424143", paddingX: "10px", }}>Nadaj paczkę  </Typography>
-                                <LocalShippingIcon sx={{ fontSize: "40px", color: "#424143", }} />
                             </Box>
-
-                        </Box>
-                    </Box>
-                    <Box sx={{
-                        width: "400px",
-                        height: "400px",
-                        backgroundColor: "#424143",
-                        borderRadius: "15px",
-                        padding: "10px",
-                        marginY: pageWidth < 830 ? "10px" : "0px",
-                        '&:hover': {
-                            backgroundColor: '#9D4570',
-                            cursor: "pointer",
-                        },
-                    }}>
-                        <Box sx={{
-                            height: "70%",
-                            backgroundImage: `url("https://1.bp.blogspot.com/-11UqepTOqe0/XSxqMnt5XrI/AAAAAAAAIHU/jaGD44LcraY3Mj_WSwy_kSBpkXIA3xWXQCLcBGAs/s1600/Paczkomat_mockup.jpg")`,
-                            backgroundRepeat: "no-repeat",
-                            // backgroundPosition: "center",
-                            backgroundSize: "cover",
-                            borderTopLeftRadius: "15px",
-                            borderTopRightRadius: "15px",
-                        }}>
-                        </Box>
-                        <Box sx={{
-                            height: "30%",
-                            backgroundColor: "#FFCD00",
-                            borderBottomLeftRadius: "15px",
-                            borderBottomRightRadius: "15px",
-                            paddingX: "10px",
-
-                        }}>
                             <Box sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                height: "50px", paddingTop: "20px"
+                                height: "30%",
+                                backgroundColor: "#FFCD00",
+                                borderBottomLeftRadius: "15px",
+                                borderBottomRightRadius: "15px",
+                                paddingX: "10px",
+
                             }}>
-                                <Typography variant="h4" sx={{ color: "#424143", paddingX: "10px", }}>Odbierz paczkę  </Typography>
-                                <MarkunreadMailboxIcon sx={{ fontSize: "40px", color: "#424143", }} />
+                                <Box sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    height: "50px", paddingTop: "20px"
+                                }}>
+                                    <Typography variant="h4" sx={{ color: "#424143", paddingX: "10px", }}>Odbierz paczkę  </Typography>
+                                    <MarkunreadMailboxIcon sx={{ fontSize: "40px", color: "#424143", }} />
+                                </Box>
+
                             </Box>
-
                         </Box>
-                    </Box>
-
+                    </>}
+                    {addParcelOpen && <AddParcelForm maxWidth={pageWidth} setAddParcelOpen={setAddParcelOpen} />}
                 </Box>
             </Box>
         </>

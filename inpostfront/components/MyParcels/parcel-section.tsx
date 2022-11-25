@@ -16,10 +16,61 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
 
     const janId = "c3f5ffa5-fc8a-4190-8521-8a75af4dea02"
 
+    // async function fetchParcels() {
+    //     const link = "https://localhost:7169/user/"+localStorage.getItem("userId") +"/parcels"
+    //     console.log(link)
+
+    //     const response = await fetch(
+    //         link,
+    //         {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         }
+    //     );
+    //     if (!response.ok) {
+    //         throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     const data = await response.json();
+    //     // console.log(data)
+    //     data.forEach((d: any) => {
+    //         const parcel = {
+    //             id: d.id,
+    //             name: d.name,
+    //             weight: d.weight,
+    //             receiver: {
+    //                 name: d.reciver.userName,
+    //                 id: d.reciver.id,
+    //             },
+    //             sender: {
+    //                 name: d.sender.userName,
+    //                 id: d.sender.id,
+    //             },
+    //             sourceLocker: {
+    //                 name: d.sourceLocker.name,
+    //                 id: d.sourceLocker.id,
+    //             },
+    //             destinationLocker: {
+    //                 name: d.destinationLocker.name,
+    //                 id: d.destinationLocker.id,
+    //             },
+    //         }
+    //         if (!parcelData.includes(parcel)) {
+    //             setParcelData((prev) => [...prev, parcel]);
+    //         }
+    //     });
+    // }
+
     async function fetchParcels() {
+        const fetchMultipleParcelsUrl = "https://localhost:7169/user/"+localStorage.getItem("userId") +"/parcels"
+        console.log(fetchMultipleParcelsUrl)
 
         const response = await fetch(
-            "https://localhost:7169/user/c3f5ffa5-fc8a-4190-8521-8a75af4dea02/parcels",
+            // "https://localhost:7169/user/f51622e9-db3c-49c0-e58b-08dace779d6e/parcels",
+            // "https://localhost:7169/user/9f52ce2b-2f04-42a7-e58c-08dace779d6e/parcels",
+            // "https://localhost:7169/user/c3f5ffa5-fc8a-4190-8521-8a75af4dea02/parcels",
+            fetchMultipleParcelsUrl,
             {
                 method: "GET",
                 headers: {
@@ -31,7 +82,7 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        // console.log(data)
+        console.log(data)
         data.forEach((d: any) => {
             const parcel = {
                 id: d.id,

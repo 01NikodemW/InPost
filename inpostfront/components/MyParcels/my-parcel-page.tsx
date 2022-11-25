@@ -83,7 +83,6 @@ const MyParcelPage = () => {
         window.addEventListener('resize', handleResize);
     });
 
-    console.log(pageWidth)
 
     return (<Box sx={{ minHeight: "90vh", width: "100%", bgcolor: "#FFCB04", display: "flex" }}>
         {pageWidth > 800 && <>

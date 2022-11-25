@@ -14,12 +14,10 @@ const NavbarMenu = () => {
 
     const onLoginHandler = () => {
         loginWithRedirect()
-        console.log("lolo")
     }
 
     const onLogoutHandler = () => {
         logout()
-        console.log("out")
         localStorage.removeItem("userId")
     }
 

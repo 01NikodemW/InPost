@@ -7,7 +7,6 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
-import { keyframes } from '@emotion/react'
 import DeliveryStatusLoading from "../../utils/delivery-status-loading";
 
 
@@ -103,11 +102,22 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
                     paddingBottom: "30px",
                     marginX: "5%",
                     color: "white",
-                    fontSize: width
+                    fontSize: width / 2
                 }}>
-                    <Box sx={{ width: "40%", textAlign: "left" }}>{parcelDetail.sender.name}</Box>
+                    <Box sx={{
+                        width: "40%",
+                        textAlign: "left",
+                        overflow: "hidden",
+                        fontSize: parcelDetail.sender.name.length > 18 ? width / 2.5 : width / 2
+                    }}
+                    >{parcelDetail.sender.name}</Box>
                     <ArrowRightAltIcon sx={{ fontSize: "40px", width: "20%" }} />
-                    <Box sx={{ width: "40%", textAlign: "right" }}>{parcelDetail.receiver.name}</Box>
+                    <Box sx={{
+                        width: "40%",
+                        textAlign: "right",
+                        overflow: "hidden",
+                        fontSize: parcelDetail.receiver.name.length > 18 ? width / 2.5 : width / 2
+                    }}>{parcelDetail.receiver.name}</Box>
                 </Box>
                 <Box sx={{
                     display: "flex",
@@ -182,8 +192,8 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
                             bgcolor: "#FFB502",
                         },
                     }}
-                        // onClick={collectParcelHandler}
-                        
+                    // onClick={collectParcelHandler}
+
                     >
                         Odbierz paczkę
                     </Button>
