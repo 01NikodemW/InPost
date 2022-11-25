@@ -120,8 +120,6 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
     }
 
     async function sendParcel(parcel: Parcel) {
-        console.log(parcel)
-
 
         const response = await fetch(
             "https://localhost:7169/parcel",
@@ -140,14 +138,14 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
 
     const onCreateNewParcelHandler = () => {
         setSent(true)
-        // sendParcel({
-        //     name: nameValue,
-        //     weight: Number(weightValue),
-        //     senderId: localStorage.getItem("userId"),
-        //     reciverId: receiverValue,
-        //     sourceLockerId: startLockerValue,
-        //     destinationLockerId: endLockerValue
-        // })
+        sendParcel({
+            name: nameValue,
+            weight: Number(weightValue),
+            senderId: localStorage.getItem("userId"),
+            reciverId: receiverValue,
+            sourceLockerId: startLockerValue,
+            destinationLockerId: endLockerValue
+        })
     }
 
     const onSendAgainHandler = () => {
@@ -215,7 +213,6 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{ width: 230 }}
                         onChange={(event, value) => {
-                            console.log("change")
                             if (value === null) {
                                 setStartLockerValue("")
                             }
@@ -233,7 +230,6 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{ width: 230 }}
                         onChange={(event, value) => {
-                            console.log("change")
                             if (value === null) {
                                 setEndLockerValue("")
                             }
@@ -273,6 +269,7 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
                             receiverValue.length < 1 ||
                             startLockerValue.length < 1 ||
                             endLockerValue.length < 1
+                            || startLockerValue === endLockerValue
                         }
                         sx={{
                             width: "100%",
@@ -282,6 +279,10 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
                             '&:hover': {
                                 backgroundColor: '#323133',
                                 cursor: "pointer",
+                                // border: "5px solid #FFB502"
+                            },
+                            '&:disabled': {
+                                color: "#A9A9A9"
                                 // border: "5px solid #FFB502"
                             },
 

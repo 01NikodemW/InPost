@@ -9,17 +9,20 @@ import { Locker } from "../../types/Locker";
 import { User } from "../../types/User";
 import Eyes from "../../utils/eyes";
 import SendIcon from '@mui/icons-material/Send';
+import { FilterParameters } from "../../types/FiterParameter";
 
 interface FilterSectionProps {
     lockerData: Locker[];
     userData: User[];
     hideHeader?: boolean
     expandedAccordion?: boolean
+    setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    setFilterParameters: React.Dispatch<React.SetStateAction<FilterParameters>>
 }
 
 const FilterSection: React.FC<FilterSectionProps> = (props) => {
 
-    const { lockerData, userData, hideHeader, expandedAccordion } = props;
+    const { lockerData, userData, hideHeader, expandedAccordion, setFilterParameters,setIsModalOpen } = props;
 
     const DIGIT_EXPRESSION = /^\d$/;
 
@@ -72,6 +75,22 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
             setOnlySentParcelsCheckValue(false)
         }
         setOnlyReceivedParcelsCheckValue(prev => !prev)
+    }
+
+    const onFilterClickHandler = () => {
+        if(setIsModalOpen){
+            setIsModalOpen(false)
+        }
+        setFilterParameters({
+            name: nameValue,
+            weight: weightValue,
+            sourceLocker: startLockerValue,
+            destinationLocker: endLockerValue,
+            sender: senderValue,
+            receiver: receiverValue,
+            onlySentParcels: onlySentParcelsCheckValue,
+            onlyReceivedParcels: onlyReceivedParcelsCheckValue,
+        })
     }
 
     return (
@@ -131,6 +150,7 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                                 disablePortal
                                 id="combo-box-demo"
                                 options={lockerData}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
                                 sx={{ width: 230 }}
                                 onChange={(event, value) => {
                                     if (value === null) {
@@ -147,6 +167,7 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                                 disablePortal
                                 id="combo-box-demo"
                                 options={lockerData}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
                                 sx={{ width: 230 }}
                                 onChange={(event, value) => {
                                     if (value === null) {
@@ -190,6 +211,7 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                                 disablePortal
                                 id="combo-box-demo"
                                 options={userData}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
                                 sx={{ width: 230 }}
                                 disabled={isSenderFieldDisabled}
                                 onChange={(event, value) => {
@@ -207,6 +229,7 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                                 disablePortal
                                 id="combo-box-demo"
                                 options={userData}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
                                 sx={{ width: 230 }}
                                 disabled={isReceiverFieldDisabled}
                                 onChange={(event, value) => {
@@ -224,6 +247,7 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                         <Box sx={{ display: "flex", height: "80px", alignItems: "center", justifyContent: "space-between" }}>
                             <Autocomplete
                                 options={userData}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
                                 sx={{ width: 230 }}
                                 onChange={(event, value) => {
                                     if (value === null) {
@@ -249,7 +273,10 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                                         // border: "5px solid #FFB502"
                                     },
                                 }}
-                            >Filtruj</Button>
+                                onClick={onFilterClickHandler}
+                            >
+                                Filtruj
+                            </Button>
 
                         </Box>
                     </>

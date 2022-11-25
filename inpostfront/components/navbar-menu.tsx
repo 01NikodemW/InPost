@@ -37,7 +37,7 @@ const NavbarMenu = () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const id = await response.json();
-        console.log("data ", id)
+        // console.log("data ", id)
         localStorage.setItem("userId",id )
     }
 

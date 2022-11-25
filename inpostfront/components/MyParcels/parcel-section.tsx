@@ -3,73 +3,25 @@ import { useEffect, useState } from "react";
 import { Parcel } from "../../types/Parcel";
 import SendIcon from '@mui/icons-material/Send';
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
+import { FilterParameters } from "../../types/FiterParameter";
 
 interface FilterSectionProps {
     setParcelDetail: React.Dispatch<React.SetStateAction<Parcel | null>>
     paddingTopValue?: string
+    filterParameters: FilterParameters
 }
 
 const ParcelSection: React.FC<FilterSectionProps> = (props) => {
 
-    const { setParcelDetail, paddingTopValue } = props
+    const { setParcelDetail, paddingTopValue, filterParameters } = props
     const [parcelData, setParcelData] = useState<Parcel[]>([])
 
-    const janId = "c3f5ffa5-fc8a-4190-8521-8a75af4dea02"
-
-    // async function fetchParcels() {
-    //     const link = "https://localhost:7169/user/"+localStorage.getItem("userId") +"/parcels"
-    //     console.log(link)
-
-    //     const response = await fetch(
-    //         link,
-    //         {
-    //             method: "GET",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //         }
-    //     );
-    //     if (!response.ok) {
-    //         throw new Error(`HTTP error! status: ${response.status}`);
-    //     }
-    //     const data = await response.json();
-    //     // console.log(data)
-    //     data.forEach((d: any) => {
-    //         const parcel = {
-    //             id: d.id,
-    //             name: d.name,
-    //             weight: d.weight,
-    //             receiver: {
-    //                 name: d.reciver.userName,
-    //                 id: d.reciver.id,
-    //             },
-    //             sender: {
-    //                 name: d.sender.userName,
-    //                 id: d.sender.id,
-    //             },
-    //             sourceLocker: {
-    //                 name: d.sourceLocker.name,
-    //                 id: d.sourceLocker.id,
-    //             },
-    //             destinationLocker: {
-    //                 name: d.destinationLocker.name,
-    //                 id: d.destinationLocker.id,
-    //             },
-    //         }
-    //         if (!parcelData.includes(parcel)) {
-    //             setParcelData((prev) => [...prev, parcel]);
-    //         }
-    //     });
-    // }
+    console.log("filterParameters ", filterParameters)
 
     async function fetchParcels() {
-        const fetchMultipleParcelsUrl = "https://localhost:7169/user/"+localStorage.getItem("userId") +"/parcels"
-        console.log(fetchMultipleParcelsUrl)
+        const fetchMultipleParcelsUrl = "https://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels"
 
         const response = await fetch(
-            // "https://localhost:7169/user/f51622e9-db3c-49c0-e58b-08dace779d6e/parcels",
-            // "https://localhost:7169/user/9f52ce2b-2f04-42a7-e58c-08dace779d6e/parcels",
-            // "https://localhost:7169/user/c3f5ffa5-fc8a-4190-8521-8a75af4dea02/parcels",
             fetchMultipleParcelsUrl,
             {
                 method: "GET",
@@ -82,7 +34,6 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data)
         data.forEach((d: any) => {
             const parcel = {
                 id: d.id,
@@ -139,34 +90,56 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
                 }
             }}>
                 {parcelData.map((parcel) => {
-                    const labelId = `checkbox-list-secondary-label-${parcel}`;
-                    return (
-                        <ListItem
-                            key={parcel.id}
-                            disablePadding
-                            sx={{
-                                height: "79px",
-                                borderBottom: "1px solid #7d7d7d",
-                                borderRadius: "0px",
-                                display: "flex",
-                                justifyContent: "space-between",
-                                paddingX: "20px",
-                                '&:hover': {
-                                    backgroundColor: '#323133',
-                                    cursor: "pointer",
-                                },
-                            }}
-                            onClick={() => { setParcelDetail(parcel) }}
-                        >
-                            <Box>
-                                <Typography variant="h5" sx={{ color: "white", paddingLeft: "10px" }}>{parcel.name}</Typography>
-                            </Box>
-                            <Box>
-                                {parcel.sender.id == janId && <SendIcon sx={{ fontSize: "30px", color: "white" }} />}
-                                {parcel.receiver.id == janId && <CallReceivedIcon sx={{ fontSize: "30px", color: "white" }} />}
-                            </Box>
-                        </ListItem>
-                    );
+                    const nameCondition = filterParameters.name === parcel.name || filterParameters.name === ""
+                    const weightCondition = Number(filterParameters.weight) === parcel.weight || filterParameters.weight === ""
+                    const sourceLockerCondition = filterParameters.sourceLocker === parcel.sourceLocker.id || filterParameters.sourceLocker === ""
+                    const destinationLockerCondition = filterParameters.destinationLocker === parcel.destinationLocker.id || filterParameters.destinationLocker === ""
+                    const senderCondition = filterParameters.sender === parcel.sender.id || filterParameters.sender === ""
+                    const receiverCondition = filterParameters.receiver === parcel.receiver.id || filterParameters.receiver === ""
+                    const onlySentParcelsCondition = (filterParameters.onlySentParcels && parcel.sender.id === localStorage.getItem("userId")) || filterParameters.onlySentParcels === false
+                    const onlyReceivedParcelsCondition = (filterParameters.onlyReceivedParcels && parcel.receiver.id === localStorage.getItem("userId")) || filterParameters.onlyReceivedParcels === false
+
+                    console.log(parcel.name + " - " + receiverCondition)
+
+                    const showItem = nameCondition &&
+                        weightCondition &&
+                        sourceLockerCondition &&
+                        destinationLockerCondition &&
+                        onlySentParcelsCondition &&
+                        onlyReceivedParcelsCondition &&
+                        senderCondition &&
+                        receiverCondition
+
+                    if (showItem) {
+                        return (
+                            <ListItem
+                                key={parcel.id}
+                                disablePadding
+                                sx={{
+                                    height: "79px",
+                                    borderBottom: "1px solid #7d7d7d",
+                                    borderRadius: "0px",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    paddingX: "20px",
+                                    '&:hover': {
+                                        backgroundColor: '#323133',
+                                        cursor: "pointer",
+                                    },
+                                }}
+                                onClick={() => { setParcelDetail(parcel) }}
+                            >
+                                <Box>
+                                    <Typography variant="h5" sx={{ color: "white", paddingLeft: "10px" }}>{parcel.name}</Typography>
+                                </Box>
+                                <Box>
+                                    {parcel.sender.id == localStorage.getItem("userId") && <SendIcon sx={{ fontSize: "30px", color: "white" }} />}
+                                    {parcel.receiver.id == localStorage.getItem("userId") && <CallReceivedIcon sx={{ fontSize: "30px", color: "white" }} />}
+                                </Box>
+                            </ListItem>
+                        );
+                    }
+
                 })}
             </List>
             {/* </Paper> */}
