@@ -38,7 +38,6 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
     const [onlyReceivedParcelsCheckValue, setOnlyReceivedParcelsCheckValue] = useState<boolean>(false)
     const [senderValue, setSenderValue] = useState<string>("")
     const [receiverValue, setReceiverValue] = useState<string>("")
-    const [deliveryStatus, setDeliveryStatus] = useState<string>("")
 
 
     const isSenderFieldDisabled = receiverValue.length > 0 || onlySentParcelsCheckValue || onlyReceivedParcelsCheckValue
@@ -245,32 +244,15 @@ const FilterSection: React.FC<FilterSectionProps> = (props) => {
                         </Box>
                         <Box sx={{ bgcolor: "#424143", height: "1px", width: "90%", margin: "auto" }} />
                         <Box sx={{ display: "flex", height: "80px", alignItems: "center", justifyContent: "space-between" }}>
-                            <Autocomplete
-                                options={userData}
-                                isOptionEqualToValue={(option, value) => option.id === value.id}
-                                sx={{ width: 230 }}
-                                onChange={(event, value) => {
-                                    if (value === null) {
-                                        setDeliveryStatus("")
-                                    }
-                                    else {
-                                        setDeliveryStatus(value.label)
-                                    }
-                                }}
-                                renderInput={(params) => <TextField {...params} label="Stan wysyłki" />}
-                            />
-
-                            <SendIcon sx={{ marginX: "5px", color: "white" }} />
                             <Button
                                 sx={{
-                                    width: "230px",
+                                    width: "100%",
                                     height: "56px",
                                     bgcolor: "#424143",
                                     color: "white",
                                     '&:hover': {
                                         backgroundColor: '#323133',
                                         cursor: "pointer",
-                                        // border: "5px solid #FFB502"
                                     },
                                 }}
                                 onClick={onFilterClickHandler}

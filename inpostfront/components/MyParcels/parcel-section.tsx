@@ -16,7 +16,6 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
     const { setParcelDetail, paddingTopValue, filterParameters } = props
     const [parcelData, setParcelData] = useState<Parcel[]>([])
 
-    console.log("filterParameters ", filterParameters)
 
     async function fetchParcels() {
         const fetchMultipleParcelsUrl = "https://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels"
@@ -39,6 +38,8 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
                 id: d.id,
                 name: d.name,
                 weight: d.weight,
+                dateOfSent: d.dateOfSent,
+                deliveryStatus: d.deliveryStatus,
                 receiver: {
                     name: d.reciver.userName,
                     id: d.reciver.id,
@@ -66,7 +67,6 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
         setParcelData([])
         fetchParcels();
     }, [])
-
 
 
 
@@ -99,7 +99,6 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
                     const onlySentParcelsCondition = (filterParameters.onlySentParcels && parcel.sender.id === localStorage.getItem("userId")) || filterParameters.onlySentParcels === false
                     const onlyReceivedParcelsCondition = (filterParameters.onlyReceivedParcels && parcel.receiver.id === localStorage.getItem("userId")) || filterParameters.onlyReceivedParcels === false
 
-                    console.log(parcel.name + " - " + receiverCondition)
 
                     const showItem = nameCondition &&
                         weightCondition &&
@@ -110,6 +109,12 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
                         senderCondition &&
                         receiverCondition
 
+                    const period = 10
+                    const isParcelReadyToCollect =
+                        parcel.receiver.id === localStorage.getItem("userId") &&
+                        Date.now() / 1000 - Number(parcel.dateOfSent) > 3 * period &&
+                        parcel.deliveryStatus === 1;
+                    const isParcelCollectede = parcel.deliveryStatus === 0;
                     if (showItem) {
                         return (
                             <ListItem
@@ -134,7 +139,7 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
                                 </Box>
                                 <Box>
                                     {parcel.sender.id == localStorage.getItem("userId") && <SendIcon sx={{ fontSize: "30px", color: "white" }} />}
-                                    {parcel.receiver.id == localStorage.getItem("userId") && <CallReceivedIcon sx={{ fontSize: "30px", color: "white" }} />}
+                                    {parcel.receiver.id == localStorage.getItem("userId") && <CallReceivedIcon sx={{ fontSize: "30px", color: isParcelReadyToCollect ? "green" : isParcelCollectede ? "#FFCB04" : "white" }} />}
                                 </Box>
                             </ListItem>
                         );

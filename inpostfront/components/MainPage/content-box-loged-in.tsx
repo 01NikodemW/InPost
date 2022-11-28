@@ -5,6 +5,7 @@ import MarkunreadMailboxIcon from '@mui/icons-material/MarkunreadMailbox';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import AddParcelForm from "./add-parcel-form";
+import router from "next/router";
 
 const ContentBoxLogedIn = () => {
 
@@ -24,6 +25,10 @@ const ContentBoxLogedIn = () => {
 
     const onAddParcelHandler = () => {
         setAddParcelOpen(true)
+    }
+
+    const onCheckParcelsHandler = () => {
+        router.push("/MyParcels")
     }
 
     return (
@@ -109,7 +114,9 @@ const ContentBoxLogedIn = () => {
                                 backgroundColor: '#9D4570',
                                 cursor: "pointer",
                             },
-                        }}>
+                        }}
+                            onClick={onCheckParcelsHandler}
+                        >
                             <Box sx={{
                                 height: "70%",
                                 backgroundImage: `url("https://1.bp.blogspot.com/-11UqepTOqe0/XSxqMnt5XrI/AAAAAAAAIHU/jaGD44LcraY3Mj_WSwy_kSBpkXIA3xWXQCLcBGAs/s1600/Paczkomat_mockup.jpg")`,
@@ -133,7 +140,7 @@ const ContentBoxLogedIn = () => {
                                     alignItems: "center",
                                     height: "50px", paddingTop: "20px"
                                 }}>
-                                    <Typography variant="h4" sx={{ color: "#424143", paddingX: "10px", }}>Odbierz paczkę  </Typography>
+                                    <Typography variant="h4" sx={{ color: "#424143", paddingX: "10px", }}>Zobacz paczki  </Typography>
                                     <MarkunreadMailboxIcon sx={{ fontSize: "40px", color: "#424143", }} />
                                 </Box>
 

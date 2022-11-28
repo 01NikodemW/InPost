@@ -48,8 +48,6 @@ const ContentBoxLogedOut = () => {
 
     const onSearchHandler = () => {
         fetchLockers()
-        console.log("parcelIdValue ", parcelIdValue)
-
     }
 
     const onGoBackHandler = () => {

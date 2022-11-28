@@ -85,9 +85,6 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
         fetchUsers();
     }, [])
 
-
-
-
     const [nameValue, setNameValue] = useState<string>("")
     const [weightValue, setWeightValue] = useState<string>("")
     const [startLockerValue, setStartLockerValue] = useState<string>("")
@@ -279,11 +276,9 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
                             '&:hover': {
                                 backgroundColor: '#323133',
                                 cursor: "pointer",
-                                // border: "5px solid #FFB502"
                             },
                             '&:disabled': {
                                 color: "#A9A9A9"
-                                // border: "5px solid #FFB502"
                             },
 
                         }}

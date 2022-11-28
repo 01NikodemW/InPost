@@ -1,16 +1,14 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Link } from "@mui/material"
-import { constants } from "buffer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from 'next/image'
 import logo from '../styles/logo.svg'
 
 const NavbarMenu = () => {
 
-    // const pages = ['Moje paczki',];
 
-    const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
-    // const
+    const { loginWithRedirect, logout, isAuthenticated, user, isLoading } = useAuth0();
+
 
     const onLoginHandler = () => {
         loginWithRedirect()
@@ -37,8 +35,7 @@ const NavbarMenu = () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const id = await response.json();
-        // console.log("data ", id)
-        localStorage.setItem("userId",id )
+        localStorage.setItem("userId", id)
     }
 
 
@@ -71,7 +68,7 @@ const NavbarMenu = () => {
                             alt="Picture of the author"
                         />
                     </Link>
-
+                    {/* 
                     <Box sx={{ display: "flex", paddingLeft: "20px" }} >
                         {isAuthenticated && <Button
                             href="/MyParcels"
@@ -89,18 +86,9 @@ const NavbarMenu = () => {
                         >
                             Moje paczki
                         </Button>}
-                    </Box>
-
-                    {/* <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                                </IconButton>
-                            </Tooltip>
-
-                        </Box> */}
+                    </Box> */}
                 </Box>
-                <Box>
+                {!isLoading && <Box>
                     {!isAuthenticated && <Button
                         sx={{
                             my: 2,
@@ -133,7 +121,7 @@ const NavbarMenu = () => {
                     >
                         wyloguj
                     </Button>}
-                </Box>
+                </Box>}
             </Box >
         </Box>
     )

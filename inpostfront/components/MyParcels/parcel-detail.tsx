@@ -13,6 +13,7 @@ import DeliveryStatusLoading from "../../utils/delivery-status-loading";
 interface ParcelDetailProps {
     setParcelDetail: React.Dispatch<React.SetStateAction<Parcel | null>>
     parcelDetail: Parcel
+    marginTopHeight?: string
 }
 
 enum DeliveryStatus {
@@ -23,15 +24,7 @@ enum DeliveryStatus {
 }
 
 const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
-    const { parcelDetail, setParcelDetail } = props
-
-    const onClickGoBackHandler = () => {
-        setParcelDetail(null)
-    }
-
-    const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus>(DeliveryStatus.Prepared)
-
-
+    const { parcelDetail, setParcelDetail, marginTopHeight } = props
     const [width, setWidth] = useState<number>(0);
     const boxRef = useRef(null);
 
@@ -48,16 +41,56 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
         window.addEventListener('resize', () => {
             setDimensions();
         });
-    }, [boxRef]);
+    }, [boxRef, width]);
 
+
+    const onClickGoBackHandler = () => {
+        setParcelDetail(null)
+    }
+
+    const getDeliveryStatus = () => {
+        if (parcelDetail.deliveryStatus === 0) {
+            return DeliveryStatus.Collected
+        }
+        const time = Date.now() / 1000 - Number(parcelDetail.dateOfSent)
+        const period = 10
+        if (time < period) {
+            return DeliveryStatus.Prepared
+        }
+        if (time < 2 * period) {
+            return DeliveryStatus.Sent
+        }
+        return DeliveryStatus.Delivered
+
+    }
+
+    const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus>(getDeliveryStatus())
+
+    async function collectParcel() {
+
+        const collectParcelUrl = "https://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels/" + parcelDetail.id
+        const response = await fetch(
+            collectParcelUrl,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        setDeliveryStatus(DeliveryStatus.Collected)
+    }
 
     const collectParcelHandler = () => {
-        setDeliveryStatus(DeliveryStatus.Collected)
+        collectParcel()
     }
 
     return (
         <>
-            <Box sx={{ height: "90px" }}>
+            <Box sx={{ height: marginTopHeight ? marginTopHeight : "90px" }}>
             </Box>
             <Paper
                 ref={boxRef}
@@ -95,7 +128,6 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
                 </Typography>
                 <Box sx={{
                     display: "flex",
-                    // justifyContent: "space-between",
                     alignItems: "center",
                     height: "50px",
                     paddingTop: "50px",
@@ -121,7 +153,6 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
                 </Box>
                 <Box sx={{
                     display: "flex",
-                    // justifyContent: "space-between",
                     alignItems: "center",
                     height: "50px",
                     paddingY: "50px",
@@ -177,27 +208,29 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
                         Wysłana
                     </Typography>
                     <Typography variant="subtitle2" sx={{ width: "40%", textAlign: "right", color: "#DCDCDC" }}>
-                        Dostarczona
+                        {parcelDetail.receiver.id === localStorage.getItem("userId") && parcelDetail.deliveryStatus === 0 ? "Odebrana" : "Dostarczona"}
                     </Typography>
                 </Box>
-                {deliveryStatus !== DeliveryStatus.Collected && <Box sx={{ display: "flex", justifyContent: "center", mt: "20px" }}>
-                    <Button sx={{
-                        bgcolor: "#FFCB04",
-                        color: "#424143",
-                        fontWeight: 600,
-                        mt: "15px",
-                        height: "50px",
-                        width: "50%",
-                        "&:hover": {
-                            bgcolor: "#FFB502",
-                        },
-                    }}
-                    // onClick={collectParcelHandler}
+                {deliveryStatus === DeliveryStatus.Delivered &&
+                    parcelDetail.receiver.id === localStorage.getItem("userId") &&
+                    <Box sx={{ display: "flex", justifyContent: "center", mt: "20px" }}>
+                        <Button sx={{
+                            bgcolor: "#FFCB04",
+                            color: "#424143",
+                            fontWeight: 600,
+                            mt: "15px",
+                            height: "50px",
+                            width: "50%",
+                            "&:hover": {
+                                bgcolor: "#FFB502",
+                            },
+                        }}
+                            onClick={collectParcelHandler}
 
-                    >
-                        Odbierz paczkę
-                    </Button>
-                </Box>}
+                        >
+                            Odbierz paczkę
+                        </Button>
+                    </Box>}
             </Paper>
         </>
     )

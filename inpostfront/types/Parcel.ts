@@ -2,6 +2,8 @@ export type Parcel = {
     id: string,
     name: string,
     weight: number,
+    deliveryStatus: number,
+    dateOfSent: Number,
     receiver: {
         name: string,
         id: string,

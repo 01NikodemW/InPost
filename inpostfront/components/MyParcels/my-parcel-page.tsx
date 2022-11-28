@@ -98,79 +98,81 @@ const MyParcelPage = () => {
 
     return (
         <Box sx={{ minHeight: "90vh", width: "100%", bgcolor: "#FFCB04", display: "flex" }}>
-            {pageWidth > 800 && <>
-                <Box sx={{ width: "40%" }}>
-                    <FilterSection lockerData={lockerData} userData={userData} setFilterParameters={setFilterParameters} />
-                </Box>
-                <Box sx={{
-                    width: "2px",
-                    bgcolor: "#424143",
-                    marginY: "5vh"
-                }}>
-
-                </Box>
-                <Box sx={{ width: "60%" }}>
-                    {!parcelDetail && <ParcelSection setParcelDetail={setParcelDetail} filterParameters={filterParameters} />}
-                    {parcelDetail && <ParcelDetail parcelDetail={parcelDetail} setParcelDetail={setParcelDetail} />}
-
-                </Box>
-
-            </>}
-            {pageWidth <= 800 && <>
-                <Box sx={{ width: "100%" }}>
+            {pageWidth > 800 &&
+                <>
+                    <Box sx={{ width: "40%" }}>
+                        <FilterSection lockerData={lockerData} userData={userData} setFilterParameters={setFilterParameters} />
+                    </Box>
                     <Box sx={{
-                        display: "flex", justifyContent: "space-between",
-                        paddingTop: "20px",
-                        paddingX: "15px",
-                        alignItems: "center"
+                        width: "2px",
+                        bgcolor: "#424143",
+                        marginY: "5vh"
                     }}>
-                        <Typography
-                            variant="h3"
-                            sx={{
-                                color: "#424143",
 
-                            }}
-                        >
-                            Moje paczki
-                        </Typography>
-                        <IconButton sx={{
-                            "&:hover": {
-                                bgcolor: "#FFCB04",
-                            },
-                        }}
-                            onClick={() => setIsModalOpen(true)}
-                        >
-                            <FilterAltOutlinedIcon sx={{
-                                fontSize: "40px",
-                                color: "#424143",
+                    </Box>
+                    <Box sx={{ width: "60%" }}>
+                        {!parcelDetail && <ParcelSection setParcelDetail={setParcelDetail} filterParameters={filterParameters} />}
+                        {parcelDetail && <ParcelDetail parcelDetail={parcelDetail} setParcelDetail={setParcelDetail} />}
+
+                    </Box>
+
+                </>}
+            {pageWidth <= 800 &&
+                <>
+                    <Box sx={{ width: "100%" }}>
+                        <Box sx={{
+                            display: "flex", justifyContent: "space-between",
+                            paddingTop: "20px",
+                            paddingX: "15px",
+                            alignItems: "center"
+                        }}>
+                            <Typography
+                                variant="h3"
+                                sx={{
+                                    color: "#424143",
+
+                                }}
+                            >
+                                Moje paczki
+                            </Typography>
+                            <IconButton sx={{
                                 "&:hover": {
-                                    color: "#323133",
+                                    bgcolor: "#FFCB04",
                                 },
-                            }} />
-                        </IconButton>
+                            }}
+                                onClick={() => setIsModalOpen(true)}
+                            >
+                                <FilterAltOutlinedIcon sx={{
+                                    fontSize: "40px",
+                                    color: "#424143",
+                                    "&:hover": {
+                                        color: "#323133",
+                                    },
+                                }} />
+                            </IconButton>
+                        </Box>
+                        {!parcelDetail && <ParcelSection paddingTopValue={"20px"} setParcelDetail={setParcelDetail} filterParameters={filterParameters} />}
+                        {parcelDetail && <ParcelDetail parcelDetail={parcelDetail} setParcelDetail={setParcelDetail} marginTopHeight={"20px"} />}
                     </Box>
-                    {!parcelDetail && <ParcelSection paddingTopValue={"20px"} setParcelDetail={setParcelDetail} filterParameters={filterParameters} />}
-                    {parcelDetail && <ParcelDetail parcelDetail={parcelDetail} setParcelDetail={setParcelDetail} />}
-                </Box>
-                <Modal
-                    open={isModalOpen}
-                    onClose={() => { setIsModalOpen(false) }}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                    sx={{ bgcolor: "rgb(0,0,0,0.7)" }}
-                >
-                    <Box sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: "90vw",
-                        bgcolor: 'transparent',
-                    }}>
-                        <FilterSection lockerData={lockerData} userData={userData} hideHeader={true} expandedAccordion={true} setFilterParameters={setFilterParameters} setIsModalOpen={setIsModalOpen}/>
-                    </Box>
-                </Modal>
-            </>}
+                    <Modal
+                        open={isModalOpen}
+                        onClose={() => { setIsModalOpen(false) }}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                        sx={{ bgcolor: "rgb(0,0,0,0.7)" }}
+                    >
+                        <Box sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: "90vw",
+                            bgcolor: 'transparent',
+                        }}>
+                            <FilterSection lockerData={lockerData} userData={userData} hideHeader={true} expandedAccordion={true} setFilterParameters={setFilterParameters} setIsModalOpen={setIsModalOpen} />
+                        </Box>
+                    </Modal>
+                </>}
         </Box>)
 }
 
