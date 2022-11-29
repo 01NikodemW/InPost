@@ -1,20 +1,12 @@
 using System.Security.Claims;
-using System.Text.Json;
-using APIInpost;
 using APIInpost.Entities;
-using APIInpost.models;
 using APIInpost.Services;
-using Auth0.AspNetCore.Authentication;
-using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IParcelService, ParcelService>();
@@ -24,7 +16,6 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddDbContext<InpostDbContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// builder.Services.ConfigureSameSiteNoneCookies();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -52,7 +43,7 @@ builder.Services.AddAuthentication(options =>
     
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 
 
 app.UseRouting();

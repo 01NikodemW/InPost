@@ -1,6 +1,7 @@
 using APIInpost.Entities;
 using APIInpost.Services;
 using APIInpost.models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIInpost.Controllers
@@ -36,6 +37,7 @@ namespace APIInpost.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpGet("{id}/parcels")]
         public ActionResult<IEnumerable<ParcelDto>>
         GetUsersParcels([FromRoute] Guid id)
@@ -45,6 +47,7 @@ namespace APIInpost.Controllers
             return Ok(allParcels);
         }
 
+        [Authorize]
         [HttpPut("{receiverId}/parcels/{parcelId}")]
         public ActionResult<Guid>
         CollectParcel([FromRoute] Guid receiverId, [FromRoute] Guid parcelId)
@@ -70,6 +73,13 @@ namespace APIInpost.Controllers
             var sentParcels = _parcelService.GetParcelsUserGet(id);
 
             return Ok(sentParcels);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<ParcelDto> DeleteUser([FromRoute] Guid id)
+        {
+            _userService.DeleteUser (id);
+            return Ok();
         }
     }
 }

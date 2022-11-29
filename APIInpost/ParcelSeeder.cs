@@ -1,4 +1,5 @@
 using APIInpost.Entities;
+using APIInpost.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIInpost
@@ -89,7 +90,9 @@ namespace APIInpost
                         SourceLockerId =
                             Guid.Parse("97808418-1ad7-4092-8f50-062ee13d4b4e"),
                         DestinationLockerId =
-                            Guid.Parse("f113942e-d82b-4ac2-a5c1-35c5cff7053a")
+                            Guid.Parse("f113942e-d82b-4ac2-a5c1-35c5cff7053a"),
+                        DateOfSent = 0,
+                        DeliveryStatus = DeliveryStatus.Sent
                     },
                     new Parcel()
                     {
@@ -103,7 +106,9 @@ namespace APIInpost
                         SourceLockerId =
                             Guid.Parse("b366ff28-9316-4c1d-a480-43817ef9226e"),
                         DestinationLockerId =
-                            Guid.Parse("d159e481-5737-4368-b18b-ea5ac8ae14a3")
+                            Guid.Parse("d159e481-5737-4368-b18b-ea5ac8ae14a3"),
+                        DateOfSent = 0,
+                        DeliveryStatus = DeliveryStatus.Sent
                     }
                 };
 

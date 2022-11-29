@@ -4,6 +4,7 @@ using APIInpost.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIInpost.Migrations
 {
     [DbContext(typeof(InpostDbContext))]
-    partial class InpostDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221126233420_DeleteDate")]
+    partial class DeleteDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace APIInpost.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("DateOfSent")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("DeliveryStatus")
                         .HasColumnType("int");
@@ -69,7 +68,6 @@ namespace APIInpost.Migrations
                         new
                         {
                             Id = new Guid("32954d68-2ff6-4608-acaa-122760ab71c6"),
-                            DateOfSent = 0L,
                             DeliveryStatus = 0,
                             DestinationLockerId = new Guid("f113942e-d82b-4ac2-a5c1-35c5cff7053a"),
                             Name = "Duza paczka",
@@ -81,7 +79,6 @@ namespace APIInpost.Migrations
                         new
                         {
                             Id = new Guid("84f4e618-8c77-4b51-bd04-8cf831f52073"),
-                            DateOfSent = 0L,
                             DeliveryStatus = 0,
                             DestinationLockerId = new Guid("d159e481-5737-4368-b18b-ea5ac8ae14a3"),
                             Name = "Mala paczka",

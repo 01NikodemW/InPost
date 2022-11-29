@@ -6,5 +6,6 @@ namespace APIInpost.Services
     {
         IEnumerable<ShortUserDto> GetAllUserByList();
         ShortUserDto GetUserById(Guid id);
+        void DeleteUser(Guid userId);
     }
 }

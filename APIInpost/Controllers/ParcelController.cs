@@ -2,6 +2,7 @@ using APIInpost.Entities;
 using APIInpost.Services;
 using APIInpost.models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIInpost.Controllers
 {
@@ -37,6 +38,7 @@ namespace APIInpost.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<Guid>
         CreateParcel([FromBody] CreateParcelDto parceldto)

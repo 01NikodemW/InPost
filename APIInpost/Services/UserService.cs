@@ -33,6 +33,16 @@ namespace APIInpost.Services
             return userDto;
         }
 
+        public void DeleteUser(Guid userId)
+        {
+                       var user = _dbContext.Users.FirstOrDefault(p => p.Id == userId);
+            if (user is null)
+               throw new NullReferenceException("User to delete found");
+
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
+        }
+
         // public IEnumerable<NormalUserDto> GetAllUsers()
         // {
         //     var users = _dbContext.Users.Include(x => x.RecievedParcels).Include(x => x.SentParcels).ToList();

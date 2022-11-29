@@ -11,6 +11,7 @@ namespace APIInpost.models
 
         public int Weight { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }
+        public long DateOfSent { get; set; }
 
         public Guid SourceLockerId { get; set; } 
 

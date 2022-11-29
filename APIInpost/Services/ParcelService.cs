@@ -80,6 +80,7 @@ namespace APIInpost.Services
             check(dto.SenderId,dto.ReciverId,dto.SourceLockerId,dto.DestinationLockerId);
             var parcel = _mapper.Map<Parcel>(dto);
             parcel.DeliveryStatus = Enum.DeliveryStatus.Sent;
+            parcel.DateOfSent = DateTimeOffset.Now.ToUnixTimeSeconds();
             _dbContext.Parcels.Add (parcel);
             _dbContext.SaveChanges();
             return parcel.Id;
