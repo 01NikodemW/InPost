@@ -13,25 +13,6 @@ export default function Home() {
 
     ;
 
-    // if (isAuthenticated) {
-    //     const token = getAccessTokenSilently()
-    //         .then(x => {
-    //             const response = fetch(
-    //                 "https://localhost:7169/account",
-    //                 {
-    //                     method: "GET",
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         "Authorization": "Bearer " + x
-    //                     },
-    //                 })
-    //             return x;
-    //         }
-    //         )
-    // }
-
-    
-
     return (
         < >
             <Head>
