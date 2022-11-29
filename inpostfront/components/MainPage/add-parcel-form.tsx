@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { User } from "../../types/User";
 import { Locker } from "../../types/Locker";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 interface AddParcelFormProps {
@@ -30,6 +31,7 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
     const [lockerData, setLockerData] = useState<Locker[]>([])
     const [userData, setUserData] = useState<User[]>([])
     const [sent, setSent] = useState<boolean>(false)
+    const { getAccessTokenSilently } = useAuth0();
 
 
     async function fetchLockers() {
@@ -116,6 +118,9 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
         }
     }
 
+
+    // console.log(getAccessTokenSilently())
+
     async function sendParcel(parcel: Parcel) {
 
         const response = await fetch(
@@ -124,7 +129,9 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("accessToken")
                 },
+                
                 body: JSON.stringify(parcel),
             }
         );

@@ -7,7 +7,7 @@ import logo from '../styles/logo.svg'
 const NavbarMenu = () => {
 
 
-    const { loginWithRedirect, logout, isAuthenticated, user, isLoading } = useAuth0();
+    const { loginWithRedirect, logout, isAuthenticated, user, isLoading, getAccessTokenSilently } = useAuth0();
 
 
     const onLoginHandler = () => {
@@ -17,6 +17,8 @@ const NavbarMenu = () => {
     const onLogoutHandler = () => {
         logout()
         localStorage.removeItem("userId")
+
+        localStorage.removeItem("accessToken")
     }
 
     async function getUserId() {
@@ -39,9 +41,26 @@ const NavbarMenu = () => {
     }
 
 
+
     useEffect(() => {
         if (user != null) {
             getUserId();
+            if (isAuthenticated) {
+                const token = getAccessTokenSilently()
+                    .then(x => {
+                        const response = fetch(
+                            "https://localhost:7169/account",
+                            {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": "Bearer " + x
+                                },
+                            })
+                        localStorage.setItem("accessToken", x)
+                    }
+                    )
+            }
         }
     }, [])
 

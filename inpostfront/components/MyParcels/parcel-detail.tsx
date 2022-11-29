@@ -75,6 +75,7 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("accessToken")
                 },
             }
         );
