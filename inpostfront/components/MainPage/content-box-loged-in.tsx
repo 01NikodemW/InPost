@@ -50,7 +50,7 @@ const ContentBoxLogedIn = () => {
                         color: "#424143"
                     }}
                     >
-                        Witaj {user.given_name}
+                        Witaj {user!.given_name}
                     </Typography>}
                 <Box sx={{
                     display: "flex",

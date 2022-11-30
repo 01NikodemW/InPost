@@ -25,14 +25,16 @@ const ContentBoxLogedOut = () => {
     }
 
     async function fetchLockers() {
-        const findParcelUrl = "https://localhost:7169/parcel/" + parcelIdValue
+        const findParcelUrl = "http://localhost:7169/parcel/" + parcelIdValue
 
         const response = await fetch(
             findParcelUrl,
             {
                 method: "GET",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
+                   
                 },
             }
         );

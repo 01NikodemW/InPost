@@ -24,9 +24,10 @@ const NavbarMenu = () => {
     async function getUserId() {
 
         const response = await fetch(
-            "https://localhost:7169/account",
+            "http://localhost:7169/account",
             {
                 method: "POST",
+                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -49,10 +50,11 @@ const NavbarMenu = () => {
                 const token = getAccessTokenSilently()
                     .then(x => {
                         const response = fetch(
-                            "https://localhost:7169/account",
+                            "http://localhost:7169/account",
                             {
                                 method: "GET",
-                                headers: {
+                                                mode: 'cors',
+                headers: {
                                     "Content-Type": "application/json",
                                     "Authorization": "Bearer " + x
                                 },

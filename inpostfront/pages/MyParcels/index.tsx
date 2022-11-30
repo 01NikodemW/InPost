@@ -14,11 +14,13 @@ export default function Home() {
     async function fetchLockers() {
 
         const response = await fetch(
-            "https://localhost:7169/parcellocker",
+            "http://localhost:7169/parcellocker",
             {
                 method: "GET",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
+                   
                 },
             }
         );
@@ -31,11 +33,13 @@ export default function Home() {
     async function fetchUsers() {
 
         const response = await fetch(
-            "https://localhost:7169/user",
+            "http://localhost:7169/user",
             {
                 method: "GET",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
+                   
                 },
             }
         );

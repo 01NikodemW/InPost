@@ -31,6 +31,7 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
     useEffect(() => {
         const setDimensions = () => {
             if (boxRef.current) {
+                // @ts-ignore
                 setWidth(boxRef.current.offsetWidth / 15);
             }
         };
@@ -68,11 +69,12 @@ const ParcelDetail: React.FC<ParcelDetailProps> = (props) => {
 
     async function collectParcel() {
 
-        const collectParcelUrl = "https://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels/" + parcelDetail.id
+        const collectParcelUrl = "http://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels/" + parcelDetail.id
         const response = await fetch(
             collectParcelUrl,
             {
                 method: "PUT",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("accessToken")

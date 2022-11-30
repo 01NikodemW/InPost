@@ -9,10 +9,6 @@ namespace APIInpost.Entities
         {
         }
 
-        private string
-            _connectionString =
-                "Server=(localdb)\\mssqllocaldb;Database=InpostDb;Trusted_Connection=True;";
-
         public DbSet<Parcel> Parcels { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -56,13 +52,6 @@ namespace APIInpost.Entities
             //     .Property(x => x.DeliveryStatus)
             //     .HasConversion<string>();
 
-        }
-
-        protected override void OnConfiguring(
-            DbContextOptionsBuilder optionsBuilder
-        )
-        {
-            optionsBuilder.UseSqlServer (_connectionString);
         }
     }
 }

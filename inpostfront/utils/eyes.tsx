@@ -15,7 +15,9 @@ const EyesFollow = () => {
         },
     } = useMightyMouse(true, 'right-eye', { x: 20, y: 20 });
 
+         // @ts-ignore
     const rotateLeftEye = `rotate(${-angleLeftEye}deg)`;
+         // @ts-ignore
     const rotateRightEye = `rotate(${-angleRightEye}deg)`;
 
     return (

@@ -1,0 +1,5 @@
+.git
+Dockerfile.backend
+Dockerfile.frontend
+docker-compose
+**/node_modules/

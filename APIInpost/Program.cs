@@ -2,6 +2,7 @@ using System.Security.Claims;
 using APIInpost.Entities;
 using APIInpost.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,9 @@ builder.Services.AddScoped<IParcelService, ParcelService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IParcelLockerService, ParcelLockerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddDbContext<InpostDbContext>();
+builder.Services.AddDbContext<InpostDbContext>(opt => {
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddAuthentication(options =>
@@ -29,17 +32,15 @@ builder.Services.AddAuthentication(options =>
         NameClaimType = ClaimTypes.NameIdentifier
     };
 });
-
-      builder.Services.AddCors(options =>
-      {
-        options.AddDefaultPolicy(
-            builder =>
-            {
-              builder.WithOrigins("http://localhost:4040")
-                 .WithHeaders("Authorization");
-            });
-      });
       builder.Services.AddControllers();
+
+Thread.Sleep(10_000);
+var provider = builder.Services.BuildServiceProvider();
+using(var scope = provider.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<InpostDbContext>();
+    db.Database.Migrate();
+}
     
 var app = builder.Build();
 
@@ -57,8 +58,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

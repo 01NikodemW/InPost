@@ -37,11 +37,13 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
     async function fetchLockers() {
 
         const response = await fetch(
-            "https://localhost:7169/parcellocker",
+            "http://localhost:7169/parcellocker",
             {
                 method: "GET",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
+                   
                 },
             }
         );
@@ -60,11 +62,13 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
     async function fetchUsers() {
 
         const response = await fetch(
-            "https://localhost:7169/user",
+            "http://localhost:7169/user",
             {
                 method: "GET",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
+                   
                 },
             }
         );
@@ -124,9 +128,10 @@ const AddParcelForm: React.FC<AddParcelFormProps> = (props) => {
     async function sendParcel(parcel: Parcel) {
 
         const response = await fetch(
-            "https://localhost:7169/parcel",
+            "http://localhost:7169/parcel",
             {
                 method: "POST",
+                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("accessToken")

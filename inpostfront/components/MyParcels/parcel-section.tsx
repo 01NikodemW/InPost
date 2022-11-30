@@ -18,12 +18,13 @@ const ParcelSection: React.FC<FilterSectionProps> = (props) => {
 
 
     async function fetchParcels() {
-        const fetchMultipleParcelsUrl = "https://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels"
+        const fetchMultipleParcelsUrl = "http://localhost:7169/user/" + localStorage.getItem("userId") + "/parcels"
 
         const response = await fetch(
             fetchMultipleParcelsUrl,
             {
                 method: "GET",
+                                mode: 'cors',
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("accessToken")
