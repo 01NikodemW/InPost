@@ -22,5 +22,5 @@ services:
     ports:
       - "1433:1433"
     environment:
-      SA_PASSWORD: "GIGA_POTEZNE_HASLO_!@#123"
+      SA_PASSWORD: "MOCNEHASLO1234!@###"
       ACCEPT_EULA: "Y"
